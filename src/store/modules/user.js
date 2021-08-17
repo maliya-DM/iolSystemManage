@@ -1,12 +1,15 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { setStorage, getStorage, removeStorage } from '@/utils/storage'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    // checkListData: [getStorage('checkList')]
+    checkListData: []
   }
 }
 
@@ -24,6 +27,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_CHECKLIST: (state,checkListData) => {
+      state.checkListData = checkListData
   }
 }
 
@@ -48,13 +54,10 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
-
         if (!data) {
           return reject('Verification failed, please Login again.')
         }
-
         const { name, avatar } = data
-
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         resolve(data)
@@ -85,6 +88,13 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
+  },
+
+  // 存储checkList的数据
+  saveChelistStatus( { commit }, payload) {
+      const checkListData = payload
+      commit('SET_CHECKLIST', checkListData )
+      setStorage( 'checkList', checkListData )
   }
 }
 

@@ -80,7 +80,6 @@ export default {
     name: "commonTable",
     data() {
         return {
-            loading: false,
             tableHeaderColor({ rowIndex }) {
                 if (rowIndex === 0) {
                     return "background-color:#F5F5F5;text-align:center";
@@ -122,7 +121,7 @@ export default {
             type: Number,
             default: 120
         },
-        pager: Object, //分页组件数据集合[pageNo:当前页码,pageSize:当前页数量,pageArray:[页面数据数组，展示的选择每页显示个数的选项],total:总数]
+        // pager: Object, //分页组件数据集合[pageNo:当前页码,pageSize:当前页数量,pageArray:[页面数据数组，展示的选择每页显示个数的选项],total:总数]
         pager: {
             hasPage: true, // 分页
             pageNo: 1, // 当前页
@@ -135,15 +134,7 @@ export default {
             default: 800,
         },
         routerList: Array, // 操作列路由的跳转
-        colData: {
-            type: Array,
-            default: [
-                {
-                    isShow: Boolean,
-                    title: ''
-                }
-            ]
-        }
+        colData: Array,
   },
   methods: {
     handleSelectionChange(val) {

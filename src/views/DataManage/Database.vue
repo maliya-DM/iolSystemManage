@@ -22,6 +22,7 @@
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
                 <el-tab-pane label="原始数据" name="first">
                     <tableCom
+                        v-loading="loading"
                         ref="tableRef"
                         :data="rowData"
                         :columns="rowDataColumnArray"
@@ -30,8 +31,30 @@
                         :pager="rowDataPagerArray">
                     </tableCom>
                 </el-tab-pane>
-                <el-tab-pane label="分析用数据" name="second">配置管理</el-tab-pane>
-                <el-tab-pane label="训练用数据" name="third">角色管理</el-tab-pane>
+                <el-tab-pane label="分析用数据" name="second">
+                    <p>分析用数据</p>
+                    <tableCom
+                        v-loading="loading"
+                        ref="tableRef"
+                        :data="rowData"
+                        :columns="rowDataColumnArray"
+                        :colData="colData"
+                        :showPagination = true
+                        :pager="rowDataPagerArray">
+                    </tableCom>
+                </el-tab-pane>
+                <el-tab-pane label="训练用数据" name="third">
+                    <p>训练用数据</p>
+                    <tableCom
+                        v-loading="loading"
+                        ref="tableRef"
+                        :data="rowData"
+                        :columns="rowDataColumnArray"
+                        :colData="colData"
+                        :showPagination = true
+                        :pager="rowDataPagerArray">
+                    </tableCom>
+                </el-tab-pane>
             </el-tabs>
         </div>
     </div> 
@@ -41,6 +64,7 @@
 const CheckListData = ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试']
 import { getList } from '@/api/table'
 import tableCom from "@/components/Table/Table.vue"
+import { mapGetters } from 'vuex'
 export default {
     name:"Database",
     components: {
@@ -48,6 +72,7 @@ export default {
     },
     data () {
         return {
+            loading: true,
             activeName: 'first',
             checkList: ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试'], // 默认选中的值(多选框)
             isDisabled: true,
@@ -83,6 +108,9 @@ export default {
         }
     },
     computed :{
+        ...mapGetters([
+            'checkListData'
+        ])
     },
     watch:{
         checkList(newVal,oldVal) {
@@ -99,22 +127,33 @@ export default {
                         this.isTrue = true
                     }
                 })
+                // this.$nextTick(() => {
+                //     this.doLayout()
+                // })
             }
         }
     },
     created () {
         this.fetchData()
+        if (this.$store.state.user.checkListData.length <= 0) {
+            this.checkList = ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试']
+        }else{
+            this.checkList = this.$store.state.user.checkListData
+        }
     },
     methods:{
          fetchData() {
+             // 此处是调用表格数据接口 通过handleClick方法中的tab里面的任一参数 给后台传递 从而获取不同的数据
             getList().then(response => {
+                if(response.data.items.length > 0){
+                   this.loading = false 
+                }
                 this.rowData = response.data.items
             })
         },
         // 阈值设定checkBox
         checkListChange (val) {
-            this.checkList = val
-            console.log(this.checkList)
+            this.$store.dispatch('user/saveChelistStatus',val)
         },
         // 修改阈值是否可以设置
         settingIndi () {
@@ -122,10 +161,13 @@ export default {
         },
         // 保存设置
         saveSetting () {
-           
+            this.$nextTick(()=>{
+                this.isDisabled = true
+            })
         },
+        // tab切换
         handleClick(tab, event) {
-
+            console.log(tab.index)
         },
     }
 }

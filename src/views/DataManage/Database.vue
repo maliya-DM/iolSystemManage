@@ -57,19 +57,19 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-    </div> 
+        </div>
 </template>
 <script>
 // 'Ai', '测试', 'Ca', 'Cu', '设置'
+import tableCom from '@/components/Table/Table.vue'
 const CheckListData = ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试']
 import { getList } from '@/api/table'
-import tableCom from "@/components/Table/Table.vue"
 import { mapGetters } from 'vuex'
 export default {
-    name:"Database",
     components: {
         tableCom
     },
+    name: 'Database',
     data () {
         return {
             loading: true,
@@ -80,21 +80,21 @@ export default {
             rowDataPagerArray: {
                 currentPage: 1, // 当前页
                 pageSize: 10, // 每页数据量
-                total: 0, //总数据量
-                pageSizesArray:[10,20,30]
+                total: 0, // 总数据量
+                pageSizesArray: [10, 20 ,30]
             },
             isTrue: true,
             rowDataColumnArray: [
-                { prop: 'display_time', label: "水分", minWidth: 80, sortable: false },
-	            { prop: 'pageviews', label: "酸度", minWidth: 80 }, 
-	            { prop: 'title', label: "粘度", minWidth: 60 },
-                { prop: 'display_time', label: "颗粒", minWidth: 80, sortable: false },
-	            { prop: 'pageviews', label: "Fe", minWidth: 80 }, 
-	            { prop: 'title', label: "Cu", minWidth: 60 },
-	            { prop: 'title', label: "Na", minWidth: 60 }
+                { prop: 'display_time', label: '水分', minWidth: 80, sortable: false },
+                { prop: 'pageviews', label: '酸度', minWidth: 80 }, 
+	            { prop: 'title', label: '粘度', minWidth: 60 },
+                { prop: 'display_time', label: '颗粒', minWidth: 80, sortable: false },
+	            { prop: 'pageviews', label: 'Fe', minWidth: 80 }, 
+	            { prop: 'title', label: 'Cu', minWidth: 60 },
+                { prop: 'title', label: 'Na', minWidth: 60 }
             ],
             bigarray: [],
-            CheckListData: CheckListData,  // 多选框
+            CheckListData: CheckListData, // 多选框
             colData : [
                 { title: '水分', isShow: true },
                 { title: '酸度', isShow: true },
@@ -107,22 +107,22 @@ export default {
             ]
         }
     },
-    computed :{
+    computed: {
         ...mapGetters([
             'checkListData'
         ])
     },
-    watch:{
-        checkList(newVal,oldVal) {
-            if(newVal ){
-                var noSelectArr = this.CheckListData.filter(item=>
+    watch: {
+        checkList (newVal, oldVal) {
+            if (newVal ){
+                var noSelectArr = this.CheckListData.filter(item =>
                     newVal.indexOf(item) < 0
                 )
                 this.colData.filter(i => {
-                    if(noSelectArr.indexOf(i.title) !=-1){
+                    if (noSelectArr.indexOf(i.title) != -1){
                         i.isShow = false
                         this.isTrue = false
-                    }else{
+                    } else {
                         i.isShow = true
                         this.isTrue = true
                     }
@@ -137,23 +137,24 @@ export default {
         this.fetchData()
         if (this.$store.state.user.checkListData.length <= 0) {
             this.checkList = ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试']
-        }else{
+        } else {
             this.checkList = this.$store.state.user.checkListData
         }
     },
-    methods:{
-         fetchData() {
+    methods: {
+         fetchData () {
              // 此处是调用表格数据接口 通过handleClick方法中的tab里面的任一参数 给后台传递 从而获取不同的数据
             getList().then(response => {
-                if(response.data.items.length > 0){
-                   this.loading = false 
+                if (response.data.items.length > 0) {
+                    this.loading = false
                 }
                 this.rowData = response.data.items
+                this.rowDataPagerArray.total = response.data.total
             })
         },
         // 阈值设定checkBox
         checkListChange (val) {
-            this.$store.dispatch('user/saveChelistStatus',val)
+            this.$store.dispatch('user/saveChelistStatus', val)
         },
         // 修改阈值是否可以设置
         settingIndi () {
@@ -161,14 +162,14 @@ export default {
         },
         // 保存设置
         saveSetting () {
-            this.$nextTick(()=>{
+            this.$nextTick(() => {
                 this.isDisabled = true
             })
         },
         // tab切换
-        handleClick(tab, event) {
+        handleClick (tab, event) {
             console.log(tab.index)
-        },
+        }
     }
 }
 </script>
@@ -197,13 +198,9 @@ export default {
             align-items: flex-end;
         }
     }
-    .dataBase-tableData {
-        
-    }
     .dataBase-tableData ::deep.is-active {
             background-color: #3cb661;
             color: white;
-            
         }
 }
 </style>

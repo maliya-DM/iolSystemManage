@@ -77,19 +77,19 @@
 </template>
 <script>
 export default {
-    name: "commonTable",
-    data() {
+    name: 'commonTable',
+    data () {
         return {
-            tableHeaderColor({ rowIndex }) {
+            tableHeaderColor ({ rowIndex }) {
                 if (rowIndex === 0) {
-                    return "background-color:#F5F5F5;text-align:center";
+                    return 'background-color:#F5F5F5;text-align:center'
                 }
             }
         }
     },
     props: {
-        columns: Array, //列集合
-        //数据集合
+        columns: Array, // 列集合
+        // 数据集合
         data: Array,
         // 是否显示表格边框
         border: {
@@ -126,31 +126,31 @@ export default {
             hasPage: true, // 分页
             pageNo: 1, // 当前页
             pageSize: 10, // 每页数据量
-            total: 0, //总数据量
-            pageArray:[]
+            total: 0, // 总数据量
+            pageArray: []
         },
         maxHeight: {
             type: Number,
-            default: 800,
+            default: 800
         },
         routerList: Array, // 操作列路由的跳转
-        colData: Array,
+        colData: Array
   },
   methods: {
-    handleSelectionChange(val) {
-      this.$emit("handleSelectionChange", val);
+    handleSelectionChange (val) {
+      this.$emit('handleSelectionChange', val)
     },
-    handleSizeChange(val) {
-      this.$emit("handleSizeChange", val);
+    handleSizeChange (val) {
+      this.$emit('handleSizeChange', val)
     },
-    handleCurrentChange(val) {
-      this.$emit("handleCurrentChange", val);
+    handleCurrentChange (val) {
+      this.$emit('handleCurrentChange', val)
     },
-    DefaultFormatter(row, column, cellValue) {
-      return cellValue;
+    DefaultFormatter (row, column, cellValue) {
+      return cellValue
     },
-    handleSingleChange(val) {
-      this.$emit("handleSingleChange", val);
+    handleSingleChange (val) {
+      this.$emit('handleSingleChange', val)
     }
   }
 }

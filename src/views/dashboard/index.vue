@@ -93,7 +93,7 @@
                             添加
                         </el-button>
                         <el-button
-                            type="primary"
+                            type="danger"
                             icon="el-icon-delete"
                             @click="deleteInfo">
                             删除
@@ -269,7 +269,7 @@ export default {
                 this.selectDeviceType = res.data.data
             })
         },
-          // 获取设备类型下拉选择框
+        // 获取设备类型下拉选择框
         getSamSite () {
             selectSamSite().then(res => {
                 this.selectSamplingSite = res.data.data

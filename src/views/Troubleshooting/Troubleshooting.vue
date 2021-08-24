@@ -1,26 +1,25 @@
 <template>
     <div id='dataBasePage'>
         <h3>故障诊断</h3>
-        
-    </div> 
+    </div>
 </template>
 <script>
 export default {
-    name:"Database",
+    name: 'Database',
     data () {
         return {
 
         }
     },
-    computed () {
+    computed: {
     },
-    watch:{
+    watch: {
 
     },
     created () {
 
     },
-    methods:{
+    methods: {
 
     }
 }

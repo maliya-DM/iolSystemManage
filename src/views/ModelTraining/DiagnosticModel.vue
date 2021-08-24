@@ -1,25 +1,25 @@
 <template>
     <div id='dataBasePage'>
         <h3>诊断模型训练</h3>
-    </div> 
+    </div>
 </template>
 <script>
 export default {
-    name:"Database",
+    name: 'Database',
     data () {
         return {
 
         }
     },
-    computed () {
+    computed: {
     },
-    watch:{
+    watch: {
 
     },
     created () {
 
     },
-    methods:{
+    methods: {
 
     }
 }

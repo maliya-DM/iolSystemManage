@@ -62,9 +62,9 @@
 <script>
 // 'Ai', '测试', 'Ca', 'Cu', '设置'
 import tableCom from '@/components/Table/Table.vue'
-const CheckListData = ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试']
 import { getList } from '@/api/table'
 import { mapGetters } from 'vuex'
+const CheckListData = ['水分', '酸度', '粘度', '颗粒', 'Fe', 'Cu', 'Na', '测试']
 export default {
     components: {
         tableCom
@@ -81,21 +81,21 @@ export default {
                 currentPage: 1, // 当前页
                 pageSize: 10, // 每页数据量
                 total: 0, // 总数据量
-                pageSizesArray: [10, 20 ,30]
+                pageSizesArray: [10, 20, 30]
             },
             isTrue: true,
             rowDataColumnArray: [
                 { prop: 'display_time', label: '水分', minWidth: 80, sortable: false },
-                { prop: 'pageviews', label: '酸度', minWidth: 80 }, 
-	            { prop: 'title', label: '粘度', minWidth: 60 },
+                { prop: 'pageviews', label: '酸度', minWidth: 80 },
+                { prop: 'title', label: '粘度', minWidth: 60 },
                 { prop: 'display_time', label: '颗粒', minWidth: 80, sortable: false },
-	            { prop: 'pageviews', label: 'Fe', minWidth: 80 }, 
-	            { prop: 'title', label: 'Cu', minWidth: 60 },
+                { prop: 'pageviews', label: 'Fe', minWidth: 80 },
+                { prop: 'title', label: 'Cu', minWidth: 60 },
                 { prop: 'title', label: 'Na', minWidth: 60 }
             ],
             bigarray: [],
             CheckListData: CheckListData, // 多选框
-            colData : [
+            colData: [
                 { title: '水分', isShow: true },
                 { title: '酸度', isShow: true },
                 { title: '粘度', isShow: true },
@@ -114,12 +114,12 @@ export default {
     },
     watch: {
         checkList (newVal, oldVal) {
-            if (newVal ){
+            if (newVal) {
                 var noSelectArr = this.CheckListData.filter(item =>
                     newVal.indexOf(item) < 0
                 )
                 this.colData.filter(i => {
-                    if (noSelectArr.indexOf(i.title) != -1){
+                    if (noSelectArr.indexOf(i.title) != -1) {
                         i.isShow = false
                         this.isTrue = false
                     } else {

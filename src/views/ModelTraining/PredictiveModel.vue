@@ -1,26 +1,25 @@
 <template>
     <div id='dataBasePage'>
         <h3>预测模型训练</h3>
-        
-    </div> 
+    </div>
 </template>
 <script>
 export default {
-    name:"Database",
+    name: 'Database',
     data () {
         return {
 
         }
     },
-    computed () {
+    computed: {
     },
-    watch:{
+    watch: {
 
     },
     created () {
 
     },
-    methods:{
+    methods: {
 
     }
 }
